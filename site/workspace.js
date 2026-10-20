@@ -1,3 +1,5 @@
+$('theme-select').value = WorkbenchTheme.current();
+$('theme-select').onchange = e => WorkbenchTheme.apply(e.target.value);
 const datasets = [];
 let activeDataset = 0, editingGeometryId = null;
 const panelNames = ['data', 'points', 'lines', 'layers'];
