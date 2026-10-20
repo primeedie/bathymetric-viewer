@@ -22,7 +22,7 @@ Serve the site over HTTP rather than opening `index.html` as a file, because the
 - Coordinate search using decimal degrees or degrees/minutes/seconds, with decimal, DMS, and UTM equivalents.
 - Device geolocation when the browser grants permission. Coordinates are processed in the browser; external map links open only when clicked.
 - Multiple named, draggable pins, single/multiple-pin mode, browser-local saving, view-all, and point GeoJSON export.
-- A light interface with Data, Points, Transects, and Display tabs, a persistent map legend, and responsive desktop/mobile layouts.
+- A dark charcoal interface with Data, Points, Transects, and Display tabs, a persistent map legend, and responsive desktop/mobile layouts.
 - Explicit decimal-degree and DMS coordinate modes. Both formats are accepted in coordinate and transect-origin fields.
 - Regional elevation uploads: unzipped geographic WGS 84 GeoTIFF (`.tif`, `.tiff`), ESRI ASCII (`.asc`, `.ascii`), or the prepared viewer grid (`.json`).
 - Four imported datasets per session, with a selector to switch between them and the bundled grid. Files stay on the device; uploads are not saved across reloads.

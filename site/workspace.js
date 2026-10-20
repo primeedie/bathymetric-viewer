@@ -94,10 +94,10 @@ function activateDataset(index) {
   terrain = new TerrainLayer().addTo(map);
   updateContours();
   if (coastData) {
-    coastLayer = L.geoJSON(coastData, {pane: 'contourPane', interactive: false, style: {color:'#547c60', weight:1.8, opacity:.9}});
+    coastLayer = L.geoJSON(coastData, {pane: 'contourPane', interactive: false, style: {color:'#b7bd9d', weight:1.8, opacity:.9}});
     toggle(coastLayer, $('coast').checked);
   }
-  footprintLayer = L.rectangle(bounds, {color:'#087e83', weight:2, dashArray:'7 5', fill:false, interactive:false})
+  footprintLayer = L.rectangle(bounds, {color:'#89b6b1', weight:2, dashArray:'7 5', fill:false, interactive:false})
     .bindTooltip('Elevation grid extent', {permanent:true, direction:'top', className:'footprint-label'});
   toggle(footprintLayer, $('footprint').checked);
   for (const id of ['contours','coast','interval','opacity']) $(id).disabled = data.imported;
