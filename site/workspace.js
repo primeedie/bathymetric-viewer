@@ -38,8 +38,8 @@ $('coordinate-format').onchange = () => {
   $('latitude').placeholder = dms ? '10°41′45″N' : '10.69583';
   $('longitude').placeholder = dms ? '122°36′22.5″E' : '122.60625';
   $('coordinate-help').textContent = dms
-    ? 'Example: 10°41′45″N, 122°36′22.5″E. Spaces also work: 10 41 45 N. Both formats are accepted.'
-    : 'Example: 10.69583, 122.60625. Use a minus sign for south or west. Both formats are accepted.';
+    ? 'Example: 10°41′45″N or 10 41 45 N.'
+    : 'Use − for south or west. Decimal and DMS accepted.';
 };
 function elevationAt(lat, lon) {
   if (!data) return null;
@@ -103,7 +103,7 @@ function activateDataset(index) {
     .bindTooltip('Elevation grid extent', {permanent:true, direction:'top', className:'footprint-label'});
   toggle(footprintLayer, $('footprint').checked);
   for (const id of ['contours','coast','interval','opacity']) $(id).disabled = data.imported;
-  $('contour-note').textContent = data.imported ? 'Contour overlays are not generated for uploaded grids. Switch to the bundled dataset to see its contours.' : 'Derived from the bundled elevation grid.';
+  $('contour-note').textContent = data.imported ? 'Contours available for bundled grid only.' : '';
   $('loading').hidden = true;
   if (selectedPinId !== null) {const pin = savedPins.find(p => p.id === selectedPinId); if (pin) selectPin(pin);}
   else resetSelectedPin();
@@ -143,8 +143,8 @@ function updateGeometryForm() {
   $('width-unit').textContent = $('distance-unit').value === '1000' ? 'kilometres' : 'metres';
   $('create-geometry').textContent = `${editingGeometryId === null ? 'Create' : 'Update'} ${rectangle ? 'rectangle' : 'line'}`;
   $('geometry-help').textContent = rectangle
-    ? 'A closed rectangle with right angles on the map. Length and width are measured along the two sides at the start corner; opposite geodesic sides may differ slightly with latitude. Maximum 50 km per side.'
-    : 'A straight geodesic segment from the start coordinate, using your exact horizontal length and initial bearing. Maximum 1,000 km.';
+    ? 'Right angles on map · max 50 km per side.'
+    : 'Exact horizontal length · max 1,000 km.';
 }
 $('geometry-type').onchange = updateGeometryForm;
 let previousDistanceUnit = 1;
@@ -157,9 +157,9 @@ $('distance-unit').onchange = () => {
 };
 for (const button of document.querySelectorAll('[data-bearing]')) button.onclick = () => {$('line-bearing').value = button.dataset.bearing;};
 $('use-selected-point').onclick = () => {
-  if (!selected) {geometryMessage('Add or select a point on the map first, then return to Transects.', true); return;}
+  if (!selected) {geometryMessage('Select a map point first.', true); return;}
   $('origin-lat').value = selected.lat.toFixed(6); $('origin-lon').value = selected.lon.toFixed(6);
-  geometryMessage('Start coordinate copied from the selected point.');
+  geometryMessage('Start point set.');
 };
 function validGeometryParameters(p) {
   return p && p.origin && Number.isFinite(p.origin.lat) && Math.abs(p.origin.lat) <= 85 && Number.isFinite(p.origin.lng) && Math.abs(p.origin.lng) <= 180
@@ -176,7 +176,7 @@ function editGeometry(line) {
   $('distance-unit').value = '1'; previousDistanceUnit = 1; $('line-distance').value = p.length; $('rectangle-width').value = p.width || 500; $('line-bearing').value = p.bearing;
   $('cancel-geometry-edit').hidden = false; updateGeometryForm(); showPanel('lines');
   $('geometry-form').scrollIntoView({block:'nearest', behavior:'instant'});
-  geometryMessage(`Editing ${line.shape} ${line.id}. Update dimensions to keep the shape constrained.`);
+  geometryMessage(`Editing ${line.shape} ${line.id}.`);
 }
 $('geometry-form').onsubmit = e => {
   e.preventDefault();
@@ -195,7 +195,7 @@ $('geometry-form').onsubmit = e => {
     const line = addSavedLine(points, id === null ? nextLine++ : id, {shape, parameters:p});
     persistLines(); cancelGeometryEdit(); map.fitBounds(L.latLngBounds(line.points).pad(.25), {maxZoom:17, animate:false});
     const missing = points.some(p => elevationAt(p.lat, p.lng) === null);
-    geometryMessage(`${rectangle ? 'Rectangle' : 'Line'} ${id === null ? 'created' : 'updated'}. ${rectangle ? 'Corners stay square; use Edit dimensions to adjust.' : describeSegment(points[0], points[1])}${missing ? ' Some vertices are outside valid terrain; their slopes are unavailable.' : ''}`);
+    geometryMessage(`${rectangle ? 'Rectangle' : 'Line'} ${id === null ? 'created' : 'updated'}. ${rectangle ? '' : describeSegment(points[0], points[1])}${missing ? ' Slope unavailable at missing elevations.' : ''}`);
   } catch (error) {geometryMessage(error.message, true);}
 };
 updateGeometryForm();

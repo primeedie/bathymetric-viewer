@@ -13,15 +13,11 @@
 <header>
 <h1>
 <span class="brand-mark">≋</span> Bathymetry Studio</h1>
-<div class="header-actions"><span class="badge">EXPLORE · PLAN · MEASURE</span><label class="theme-switch" for="theme-select"><span>Theme</span><select id="theme-select" aria-label="Interface theme"><option value="midnight">Midnight</option><option value="charcoal">Dark Charcoal</option></select></label></div>
+<div class="header-actions"><label class="theme-switch" for="theme-select"><span>Theme</span><select id="theme-select" aria-label="Interface theme"><option value="midnight">Midnight</option><option value="charcoal">Dark Charcoal</option></select></label></div>
 </header>
 <main>
 <aside>
-<div class="workspace-heading">
-<small>YOUR WORKSPACE</small>
-<h3>Explore beneath the surface.</h3>
-<p>Load terrain, mark locations, and plan precise transects.</p>
-</div>
+
 <nav class="workspace-tabs" aria-label="Workspace tools" role="tablist">
 <button id="tab-data" role="tab" aria-selected="true" aria-controls="panel-data" data-panel="data">01 <span>Data</span>
 </button>
@@ -71,42 +67,42 @@
 </section>
 <section class="section">
 <h2>Add GEBCO terrain</h2>
-<p>Choose a regional <strong>elevation grid</strong>. Your files stay on this device and are available until you reload.</p>
+<p class="note">Local files · cleared on reload.</p>
 <label class="upload-zone" for="terrain-files">
 <span class="upload-symbol">＋</span>
 <strong>Choose terrain files</strong>
 <small>GeoTIFF .tif / .tiff · ESRI .asc · viewer .json</small>
 <input type="file" id="terrain-files" accept=".tif,.tiff,.asc,.ascii,.json,.nc,.zip" multiple disabled>
 </label>
-<div id="upload-message" class="message" role="status" aria-live="polite">Up to 4 imported grids · 30 MB and 250,000 cells per file.</div>
+<div id="upload-message" class="message" role="status" aria-live="polite">4 grids · 30 MB / 250,000 cells each</div>
 <details class="guide">
-<summary>Which GEBCO file should I download?</summary>
+<summary>File requirements</summary>
 <ol>
 <li>Open the <a href="https://download.gebco.net/" target="_blank" rel="noopener">GEBCO download app ↗</a> and draw a small regional area.</li>
 <li>Choose the <strong>elevation grid</strong> in <strong>Data GeoTIFF</strong> or <strong>ESRI ASCII</strong> format, using geographic WGS 84 coordinates.</li>
 <li>Unzip the download and choose its <strong>.tif</strong> or <strong>.asc</strong> file here.</li>
 </ol>
 <p>Use elevations in metres, positive upward. Shaded images, TID grids, UTM grids, and global files are not supported. ASCII files must use geographic WGS 84 coordinates.</p>
-<p>Have a NetCDF (.nc)? Download GeoTIFF instead, or convert it to viewer JSON with the repository’s <code>tools/prepare.py</code>.</p>
+<p>NetCDF (.nc) is not supported here. Choose GeoTIFF instead.</p>
 </details>
-<p class="note">Switch grids using the selector above. Uploaded grids show terrain and cell elevations; derived contour overlays are available for the bundled dataset only.</p>
+
 </section>
 <details class="section downloads">
-<summary>Download the bundled Iloilo–Guimaras data</summary>
-<p>These files always belong to the original bundled grid, including when an uploaded grid is selected.</p>
+<summary>Downloads · Iloilo–Guimaras</summary>
+
 <a href="bathymetry.tif" download>Elevation GeoTIFF · WGS 84</a>
 <a id="original" href="gebco_2026_n10.866_s10.526_w122.433_e122.781.nc" download>Original GEBCO NetCDF</a>
 <a href="contours.geojson" download>10 m contours · GeoJSON</a>
 <a href="coastline.geojson" download>Sea-level contour · GeoJSON</a>
 <a href="downloads/gebco_2026_utm51n_delftdashboard.zip" download>Delft Dashboard package · UTM 51N</a>
 <a href="downloads/utm51n/README.txt" target="_blank" rel="noopener">Delft Dashboard import notes ↗</a>
-<p class="note">The UTM package uses EPSG:32651 and 460 m cells. No vertical datum conversion is applied.</p>
+
 </details>
 </div>
 <div id="panel-points" role="tabpanel" aria-labelledby="tab-points" class="tool-panel" hidden>
 <section class="section coordinate-search">
 <h2>Place a point</h2>
-<p>Enter a latitude and longitude, or click anywhere on the map.</p>
+
 <label for="coordinate-format">Coordinate format</label>
 <select id="coordinate-format">
 <option value="decimal">Decimal degrees</option>
@@ -117,7 +113,7 @@
 <input id="latitude" value="10.69583" placeholder="10.69583" required autocomplete="off" aria-describedby="coordinate-help">
 <label for="longitude">Longitude · east / west</label>
 <input id="longitude" value="122.60625" placeholder="122.60625" required autocomplete="off" aria-describedby="coordinate-help">
-<p id="coordinate-help" class="note">Example: 10.69583, 122.60625. Use a minus sign for south or west. Both formats are accepted in either mode.</p>
+<p id="coordinate-help" class="note">Use − for south or west. Decimal and DMS accepted.</p>
 <div class="buttons">
 <button type="submit" class="primary">Add point</button>
 <button id="my-location" type="button">Use my location</button>
@@ -149,7 +145,7 @@
 <section class="section pins-section">
 <h2>Saved points <span id="pin-count">0</span>
 </h2>
-<p class="note">Rename points below. Drag a marker to move it. Saved in this browser.</p>
+<p class="note">Drag to move · saved in this browser.</p>
 <div id="pin-list">
 </div>
 <div class="buttons">
@@ -162,7 +158,7 @@
 <div id="panel-lines" role="tabpanel" aria-labelledby="tab-lines" class="tool-panel" hidden>
 <section class="section">
 <h2>Build a transect</h2>
-<p>Create a straight line or a rectangle with controlled dimensions.</p>
+
 <form id="geometry-form">
 <label for="geometry-type">Shape</label>
 <select id="geometry-type">
@@ -179,8 +175,8 @@
 <input id="origin-lon" value="122.60625" required>
 </div>
 </div>
-<p class="note">Decimal degrees or DMS. Rectangle starts at this corner; its width extends to the right of the first side.</p>
-<button type="button" id="use-selected-point">Use selected point as start</button>
+<p class="note">Decimal or DMS · rectangle width extends right.</p>
+<button type="button" id="use-selected-point">Use selected point</button>
 <div class="field-grid">
 <div>
 <label for="line-distance">Length</label>
@@ -208,7 +204,7 @@
 <button type="button" data-bearing="90">E 90°</button>
 <button type="button" data-bearing="135">SE 135°</button>
 </div>
-<p id="geometry-help" class="note">A closed rectangle with right angles on the map. Length and width are measured along the two sides at the start corner; opposite geodesic sides may differ slightly with latitude. Maximum 50 km per side.</p>
+<p id="geometry-help" class="note">Right angles on map · max 50 km per side.</p>
 <button type="submit" id="create-geometry" class="primary full-width">Create rectangle</button>
 <button type="button" id="cancel-geometry-edit" hidden>Cancel editing</button>
 </form>
@@ -225,7 +221,7 @@
 </div>
 <label class="toggle-row">Snap direction to 45°<input id="snap-direction" type="checkbox">
 </label>
-<p id="draw-help" class="note">Start drawing, then click to add vertices. Hold Shift for temporary 45° snapping. Enter saves; Escape cancels.</p>
+<p id="draw-help" class="note">Click to add vertices · Shift snaps · Enter saves · Esc cancels.</p>
 <div class="measurement-live">
 <small id="measure-label">TOTAL SAVED LENGTH</small>
 <strong id="measure-total">0.00 m</strong>
@@ -237,13 +233,13 @@
 <button id="export-lines" disabled>Export GeoJSON</button>
 <button id="clear-lines" disabled>Clear lines</button>
 </div>
-<p class="note">Bearing describes direction on the map. Slope is the change in grid elevation divided by horizontal distance between endpoints—not a surveyed terrain profile. Missing elevations show “unavailable”.</p>
+<details class="guide"><summary>Measurement notes</summary><p>Lengths are horizontal WGS 84 geodesics. Rectangle sides stay perpendicular on the map; opposite side lengths may vary slightly with latitude.</p><p>Slope uses endpoint cell elevations, not a sampled terrain profile. Missing elevations show “unavailable”.</p></details>
 </section>
 </div>
 <div id="panel-layers" role="tabpanel" aria-labelledby="tab-layers" class="tool-panel" hidden>
 <section class="section">
 <h2>Map appearance</h2>
-<p>Balance geographic context with terrain detail.</p>
+
 <label>Street basemap<input id="basemap" type="checkbox" checked>
 </label>
 <label>Elevation colours<input id="raster" type="checkbox" checked>
@@ -258,7 +254,7 @@
 <span>Sea level</span>
 <span id="legend-max">High</span>
 </div>
-<p class="note">Blue: below sea level. Sand and green: above sea level. Empty cells have no data.</p>
+<p class="note">Blue: sea · sand / green: land · blank: no data</p>
 <label>Grid footprint<input id="footprint" type="checkbox" checked>
 </label>
 <label>Native cell boundaries<input id="cells" type="checkbox">
@@ -268,7 +264,7 @@
 </section>
 <section class="section">
 <h2>Contours</h2>
-<p id="contour-note" class="note">Derived from the bundled elevation grid.</p>
+<p id="contour-note" class="note"></p>
 <label>Elevation contours<input id="contours" type="checkbox" checked>
 </label>
 <label for="interval">Contour interval<select id="interval">
@@ -283,10 +279,10 @@
 <label for="opacity">Contour opacity<span id="opacity-label">45%</span>
 </label>
 <input id="opacity" type="range" min="10" max="100" value="45">
-<p class="note">The sea-level contour is derived from terrain cells, not a surveyed coastline. Zooming does not increase source resolution.</p>
+<details class="guide"><summary>Contour notes</summary><p>Derived from terrain cells, not a surveyed coastline. Zooming does not increase resolution.</p></details>
 </section>
 </div>
-<footer class="workspace-footer">GEBCO / Seabed 2030 · Elevation in metres<br>For exploration and planning. Not for navigation.</footer>
+<footer class="workspace-footer">GEBCO / Seabed 2030 · Not for navigation</footer>
 </aside>
 <section class="map-area" id="map">
 <div class="toolbar">
@@ -295,7 +291,7 @@
 <button id="fit">Fit extent</button>
 <button id="measure-map">Draw line</button>
 </div>
-<div class="help">Scroll to zoom · Drag to pan · Click to place a point</div>
+
 <div class="map-title">
 <span id="map-dataset-name">Iloilo–Guimaras</span>
 <small id="map-dataset-detail">GEBCO 2026 · WGS 84 elevation</small>
