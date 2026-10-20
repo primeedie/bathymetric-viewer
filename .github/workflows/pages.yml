@@ -28,6 +28,10 @@ jobs:
           python3 scripts/check_site.py
           node --check site/viewer.js
           node --check site/coordinates.js
+          node --check site/grid-import.js
+          node --check site/transects.js
+          node --check site/workspace.js
+          node --test scripts/tools.test.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload static site

@@ -1,7 +1,347 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GEBCO · Local Bathymetry Workbench</title><link rel="stylesheet" href="vendor/leaflet.css"><style>
-*{box-sizing:border-box}body{margin:0;color:#d7e3ed;background:#101922;font:13px system-ui,sans-serif}header{height:64px;border-bottom:1px solid #2a3946;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#15212b}h1{font-size:17px;font-weight:600;letter-spacing:-.4px;margin:0}h1 span{color:#60d7c3;margin-right:9px}.badge{font:10px monospace;letter-spacing:1px;color:#8ca7b6}main{display:grid;grid-template-columns:285px 1fr;height:calc(100dvh - 64px)}aside{padding:24px 20px;overflow:auto;border-right:1px solid #2a3946;background:#15212b}h2{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8fa7b5;margin:0 0 16px}h3{font-size:16px;margin:0 0 7px}p{color:#95a9b6;line-height:1.7;font-size:12px;margin:8px 0}.section{border-bottom:1px solid #2b3b47;padding-bottom:23px;margin-bottom:23px}.tag{display:inline-block;padding:5px 8px;border:1px solid #34534e;background:#1c3533;color:#79d8bb;border-radius:5px;font-size:10px;margin-bottom:17px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.stats small{display:block;color:#8199aa;font-size:10px;margin-bottom:5px}.stats strong{font-size:18px;font-weight:500}.stats strong span{font-size:10px;color:#93a9b5}label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:17px 0;color:#b9cbd6;font-size:12px}input[type=checkbox]{accent-color:#62d7c1;width:15px;height:15px}select,button{font:inherit;background:#20333f;color:#d1e4ed;border:1px solid #3a5263;border-radius:5px;padding:7px 9px;cursor:pointer}select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #67d9c3;outline-offset:3px}input[type=range]{width:100%;accent-color:#67d9c3}.legend{height:11px;background:linear-gradient(90deg,#10294f,#186d99,#5faeb1,#d3e8ce,#d2c493,#a5ad74,#697f58);border-radius:3px;margin-top:14px}.legend-labels{display:flex;justify-content:space-between;font:10px monospace;color:#94adbb;margin-top:6px}.downloads a{display:block;text-decoration:none;color:#82c8dd;font-size:12px;margin-top:13px}.downloads a:hover{text-decoration:underline}.map-area{position:relative;overflow:hidden;background:#0d161e;min-height:450px;touch-action:none}canvas{display:block;width:100%;height:100%;cursor:crosshair}.toolbar{position:absolute;top:18px;left:20px;display:flex;gap:6px;z-index:2}.toolbar button{background:#172733e8;box-shadow:0 3px 15px #0003}.map-title{position:absolute;right:22px;top:21px;text-align:right;pointer-events:none;font-size:12px;color:#9bb2c1}.map-title small{display:block;font:10px monospace;color:#718b9a;margin-top:6px}.compass{position:absolute;right:25px;top:83px;text-align:center;color:#9dbac9;font:12px monospace;pointer-events:none}.compass b{display:block;font-size:23px;color:#68d7c2}.status{position:absolute;bottom:0;left:0;right:0;background:#15212bef;border-top:1px solid #30424e;display:flex;justify-content:space-between;gap:10px;padding:12px 20px;font:11px monospace;color:#97b0c0;pointer-events:none}.readout{position:absolute;bottom:57px;left:20px;background:#152633ed;border:1px solid #375261;box-shadow:0 4px 30px #0003;border-radius:7px;padding:14px 17px;pointer-events:none;min-width:215px}.readout small{display:block;text-transform:uppercase;letter-spacing:1px;color:#86a1af;font-size:9px}.readout strong{font-size:24px;display:block;margin:6px 0;font-weight:500}.readout .coords{font:10px monospace;color:#9db6c5}.note{font-size:10px;color:#8299a8;line-height:1.8}.error{color:#ffad94;padding:20px}.loading{position:absolute;left:40%;top:40%;color:#a1bccb}.profile{margin-top:10px;color:#7ed9c7;font-size:10px}.help{position:absolute;left:20px;top:65px;color:#7d98aa;font-size:10px;pointer-events:none}.scale{position:absolute;right:24px;bottom:68px;pointer-events:none;color:#bad0de;text-align:center;font:10px monospace}.scale div{border:1px solid #bdd3df;border-top:0;height:7px;margin-top:5px}button:hover{background:#2b4657}@media(max-width:740px){main{grid-template-columns:1fr;height:auto}aside{order:2;display:grid;grid-template-columns:1fr 1fr;gap:20px;border-right:0}.section{margin:0}.map-area{height:65dvh;min-height:450px}.map-title{top:65px;right:15px;font-size:10px}.map-title small{font-size:9px}.compass{top:116px}.status{font-size:9px;padding:10px}.badge{font-size:8px}.help{font-size:9px}header{padding:0 16px}h1{font-size:14px}.readout{left:15px;min-width:180px}.downloads{grid-column:1/-1}}@media(max-width:400px){aside{grid-template-columns:1fr}.map-title{display:none}.status>span:last-child{display:none}}
-.coordinate-search input{width:100%;padding:9px 10px;background:#101e29;border:1px solid #3a5263;border-radius:5px;color:#d7e3ed;font:12px monospace}.coordinate-search label{display:block;margin:12px 0 6px}.coordinate-search .buttons{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.coordinate-search button{font-size:11px}.coordinate-search .message{color:#87cfbd;line-height:1.6;font-size:11px;min-height:18px;margin-top:10px}.coordinate-search .message.error-text{color:#ffb39c}.equivalents{background:#101e29;border:1px solid #304754;border-radius:6px;padding:11px;margin-top:13px;font-size:10px;line-height:1.7;overflow-wrap:anywhere}.equivalents strong{display:block;color:#84a4b5;font-size:9px;letter-spacing:1px;margin:7px 0 3px}.equivalents strong:first-child{margin-top:0}.equivalents a{color:#80cddd;display:inline-block;margin-top:10px;margin-right:8px}.equivalents code{font-size:10px;color:#d0e1e9}.coordinate-search input:focus{outline:2px solid #67d9c3;outline-offset:2px}
-#leaflet-map{position:absolute;inset:0;background:#142731;z-index:0}.toolbar,.help,.map-title,.compass,.status,.readout,.loading{z-index:800}.toolbar{flex-wrap:wrap;max-width:calc(100% - 40px)}.toolbar button{font-size:11px}.help,.map-title,.compass{background:#15212bdc;padding:6px 9px;border-radius:5px}.map-title{top:71px}.compass{top:139px}.help{top:59px;max-width:70%;line-height:1.6}.readout{bottom:68px}.status{bottom:0;padding-bottom:12px}.leaflet-bottom{bottom:36px}.leaflet-control-attribution{font-size:10px;background:#f8fafbe8!important}.leaflet-control-scale-line{background:#f8fafbe8}.bounds-text{font:10px/1.9 monospace;color:#86b5c8}.buttons{display:flex;gap:6px;flex-wrap:wrap}.buttons button{font-size:10px}button:disabled{opacity:.4;cursor:default}button.active{background:#285e58;border-color:#69d3bd;color:#beffef}.measurement-live{padding:12px;background:#101e29;border:1px solid #304754;border-radius:6px;margin:14px 0}.measurement-live small{font-size:9px;letter-spacing:1px;color:#84a4b5;display:block}.measurement-live strong{font:24px monospace;display:block;color:#ffce75;margin:8px 0}.measurement-live span{font-size:10px;color:#91aab8}.line-row{border-top:1px solid #2b3b47;padding:12px 0;display:flex;justify-content:space-between;gap:6px}.line-row strong{font-size:12px;color:#ffce75;display:block}.line-row small{font-size:10px;color:#91aab8;display:block;margin-top:4px}.line-row button{font-size:10px;padding:4px 6px}.map-error{position:absolute;z-index:900;left:20px;bottom:190px;background:#362d24;color:#ffe2b2;border:1px solid #836c3c;border-radius:5px;padding:10px;font-size:11px;max-width:300px}.measure-tooltip{background:#15212bef;color:#ffde9f;border:1px solid #a17e38;box-shadow:none;font:11px monospace}.measure-tooltip:before{border-top-color:#a17e38!important}.vertex-icon{width:12px;height:12px;background:#fff1ca;border:2px solid #9b6410;border-radius:50%;box-shadow:0 1px 5px #0006}.leaflet-container .leaflet-interactive{outline:none}.measurement-cursor,.measurement-cursor .leaflet-interactive{cursor:crosshair!important}.grid-label{background:#15212bb8;color:#d9edf3;border:0;font:9px monospace;padding:2px 4px;box-shadow:none}.leaflet-tooltip.grid-label:before{display:none}.footprint-label{font:11px system-ui;background:#15212bdc;color:#88e0d1;border:1px solid #548a80}.footprint-label:before{border-top-color:#548a80!important}@media(max-width:740px){.help{top:57px;max-width:80%}.map-title{display:none}.compass{top:100px}.readout{bottom:75px;max-width:220px}.map-area{height:70dvh}.measurement{grid-column:1/-1}.leaflet-control-attribution{font-size:8px}.toolbar{left:14px;gap:4px}}
-.measurement-hud{position:absolute;z-index:810;left:20px;top:108px;width:255px;padding:13px;background:#15212bf2;border:1px solid #a17e38;border-radius:7px;box-shadow:0 3px 20px #0003}.measurement-hud small{font-size:9px;letter-spacing:1px;color:#a6bdc8}.measurement-hud strong{display:block;color:#ffce75;font:22px monospace;margin:8px 0}.measurement-hud>span{display:block;font-size:10px;color:#c4d7e1;line-height:1.6;margin-bottom:10px}@media(max-width:740px){.measurement-hud{left:15px;top:102px;width:230px}}
-.pin-icon{border:0;background:none}.pin-bubble{background:#e5833b;color:#fff;border:2px solid #fff;box-shadow:0 2px 8px #0005;border-radius:50%;height:27px;min-width:27px;display:flex;align-items:center;justify-content:center;font:700 11px system-ui}.pin-icon.is-selected .pin-bubble{background:#087f74;outline:3px solid #64e0cb88}.pin-row{border-top:1px solid #2b3b47;padding:11px 0}.pin-row.selected{border-left:2px solid #67d9c3;padding-left:8px}.pin-row input{width:100%;font:12px system-ui;background:#101e29;color:#e1edf3;padding:7px;border:1px solid #304754;border-radius:4px}.pin-row small{display:block;font:10px/1.7 monospace;color:#9ab4c4;margin:5px 0}.pin-row .buttons button{font-size:10px}#pin-count{color:#67d9c3;float:right}.pin-label{background:#15212bee;color:#e7f4ef;border:1px solid #658a83;font:10px system-ui}.pin-label:before{border-top-color:#658a83!important}
-</style></head><body><header><h1><span>≋</span> Bathymetry Workbench</h1><span class="badge">GEBCO 2026 / BATHYMETRY VIEWER</span></header><main><aside><div class="section"><span class="tag">● GEBCO DATA LOADED</span><h3>Iloilo–Guimaras, Philippines</h3><p>Western Visayas · Panay and Guimaras<br>GEBCO grid in WGS 84 (EPSG:4326)</p><p class="bounds-text" id="bounds-text"></p><div class="buttons"><button id="philippines-view" type="button">Philippines overview</button><button id="region-view" type="button">Fit file footprint</button></div><div class="stats"><div><small>Lowest elevation</small><strong id="min">—</strong></div><div><small>Highest elevation</small><strong id="max">—</strong></div><div><small>Grid dimensions</small><strong id="dims">—</strong></div><div><small>Cell spacing</small><strong>15 <span>arcsec</span></strong></div></div></div><div class="section coordinate-search"><h2>Find coordinates</h2><form id="coordinate-form"><label for="latitude">Latitude (N / S)</label><input id="latitude" placeholder="10.69583 or 10°41′45″N" value="10.69583" required autocomplete="off"><label for="longitude">Longitude (E / W)</label><input id="longitude" placeholder="122.60625 or 122°36′22.5″E" value="122.60625" required autocomplete="off"><div class="buttons"><button type="submit">⌖ Find point</button><button id="my-location" type="button">Use my location</button><button id="clear-point" type="button">Remove selected pin</button></div></form><label for="multiple-pins">Keep multiple pins<input id="multiple-pins" type="checkbox" checked></label><p class="note">Decimal degrees or degrees/minutes/seconds. WGS 84 coordinates.</p><div id="search-message" class="message" role="status" aria-live="polite"></div><div id="equivalents" class="equivalents" hidden><strong>DECIMAL · LATITUDE, LONGITUDE</strong><code id="equivalent-decimal"></code><strong>DEGREES / MINUTES / SECONDS</strong><code id="equivalent-dms"></code><strong>UTM · WGS 84</strong><code id="equivalent-utm"></code><strong>SELECTED LOCATION</strong><span id="location-description"></span><br><a id="google-link" target="_blank" rel="noopener noreferrer">Google Maps ↗</a><a id="osm-link" target="_blank" rel="noopener noreferrer">OpenStreetMap ↗</a></div></div><div class="section pins-section"><h2>Pins <span id="pin-count">0</span></h2><p class="note">Click the map or search coordinates to add pins. Drag a pin to move it. Pins are saved in this browser.</p><div id="pin-list"></div><div class="buttons"><button id="fit-pins" type="button" disabled>View all pins</button><button id="export-pins" type="button" disabled>Export pins</button><button id="clear-pins" type="button" disabled>Clear all pins</button></div></div><div class="section"><h2>Basemap & overlays</h2><label>OpenStreetMap basemap <input id="basemap" type="checkbox" checked></label><label>GEBCO NetCDF overlay <input id="raster" type="checkbox" checked></label><label for="raster-opacity">Overlay opacity <span id="raster-opacity-label">45%</span></label><input id="raster-opacity" type="range" min="0" max="100" value="45"><p class="note">0% = transparent · 100% = opaque</p><label>File footprint <input id="footprint" type="checkbox" checked></label><label>Depth contours <input id="contours" type="checkbox" checked></label><label for="interval">Contour interval <select id="interval"><option value="10">10 m</option><option value="20" selected>20 m</option><option value="50">50 m</option><option value="100">100 m</option></select></label><label>Sea-level contour (0 m)<input id="coast" type="checkbox" checked></label><label>Cell boundaries<input id="cells" type="checkbox"></label><label>Coordinate grid<input id="graticule" type="checkbox" checked></label><label for="opacity">Contour opacity <span id="opacity-label">65%</span></label><input id="opacity" type="range" min="10" max="100" value="65"><div class="legend"></div><div class="legend-labels"><span id="legend-min">Deep</span><span>0 m</span><span id="legend-max">High</span></div><p class="note">Negative elevation = below sea level.<br>Positive elevation = land. Sea-level contour is derived from this grid, not a surveyed shoreline.</p></div><div class="section measurement"><h2>Draw & measure lines</h2><div class="buttons"><button id="draw-line" type="button">＋ Start line</button><button id="finish-line" type="button" disabled>Finish</button><button id="undo-point" type="button" disabled>Undo vertex</button><button id="cancel-line" type="button" disabled>Cancel</button></div><p id="draw-help" class="note">Start a line, then click the map to add vertices. Finish saves the line. Drag saved vertices to edit.</p><div class="measurement-live"><small id="measure-label">TOTAL DRAWN LENGTH</small><strong id="measure-total">0.00 m</strong><span id="segment-length">WGS 84 ellipsoidal geodesic</span></div><div id="line-list"></div><div class="buttons"><button id="export-lines" type="button" disabled>Export lines · GeoJSON</button><button id="clear-lines" type="button" disabled>Clear all lines</button></div><p class="note">Lengths follow the WGS 84 ellipsoid between vertices. Horizontal distances; terrain slope is not included. Accuracy depends on where you place the vertices. <a href="https://geographiclib.sourceforge.io/html/js/" target="_blank" rel="noopener" style="color:#82c8dd">Method reference ↗</a></p></div><div class="section downloads"><h2>UTM 51N · Delft Dashboard</h2><p class="note">EPSG:32651 · Coordinates in metres<br>460 m cells · Elevation positive upward</p><a href="downloads/utm51n/gebco_2026_iloilo_guimaras_utm51n.nc" download>↓ Reprojected NetCDF · UTM 51N</a><a href="downloads/utm51n/gebco_2026_iloilo_guimaras_utm51n.tif" download>↓ Reprojected GeoTIFF · UTM 51N</a><a href="downloads/utm51n/gebco_2026_iloilo_guimaras_utm51n.xyz" download>↓ Reprojected XYZ · UTM 51N</a><a href="downloads/gebco_2026_utm51n_delftdashboard.zip" download>↓ Complete Delft Dashboard package</a><p class="note">Import the NetCDF elevation variable with project CRS EPSG:32651. <a href="downloads/utm51n/README.txt" target="_blank" rel="noopener">Import notes ↗</a></p></div><div class="section downloads"><h2>Original data & exports</h2><a href="bathymetry.tif" download>↓ Georeferenced GeoTIFF</a><a href="contours.geojson" download>↓ All 10 m contours · GeoJSON</a><a href="coastline.geojson" download>↓ Sea-level contour · GeoJSON</a><a id="original" download>↓ Original GEBCO NetCDF</a><p class="note" style="margin-top:18px">Native cells are approximately 460 m wide here. Zooming does not add detail. This is a terrain viewer; no hydrodynamic model is running.</p><p class="note">Source: GEBCO 2026 / Seabed 2030.<br>Not for navigation or safety at sea.</p></div></aside><section class="map-area" id="map"><div class="toolbar"><button id="plus" aria-label="Zoom in">＋</button><button id="minus" aria-label="Zoom out">−</button><button id="fit">Fit extent</button><button id="measure-map">Draw line</button></div><div class="help">Scroll to zoom · Drag to pan · Click for coordinates / elevation</div><div class="map-title">Iloilo–Guimaras · Philippines<small>GEBCO 2026 · WGS 84 georeferencing</small></div><div class="compass">N<b>↑</b></div><div id="leaflet-map" aria-label="OpenStreetMap with GEBCO bathymetry and measurement lines"></div><div id="measurement-hud" class="measurement-hud" hidden><small>DRAWING LINE · WGS 84</small><strong id="hud-length">0.00 m</strong><span id="hud-segment">Click the map to add vertices</span><div class="buttons"><button id="hud-finish" type="button" disabled>Finish</button><button id="hud-undo" type="button" disabled>Undo</button><button id="hud-cancel" type="button">Cancel</button></div></div><div class="loading" id="loading">Reading local terrain…</div><div class="readout"><small id="sample-label">Move over the terrain</small><strong id="sample">— m</strong><div class="coords" id="coords">Longitude / latitude</div><div class="profile" id="sample-note">Native grid cell elevation</div></div><div class="status"><span id="status">Loading…</span><span>EPSG:4326 · NORTH UP</span></div></section></main><script src="vendor/leaflet.js"></script><script src="vendor/geographiclib-geodesic.min.js"></script><script src="coordinates.js"></script><script src="viewer.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f8fafc">
+<title>Bathymetry Studio · GEBCO terrain & transects</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="workbench.css">
+</head>
+<body>
+<header>
+<h1>
+<span class="brand-mark">≋</span> Bathymetry Studio</h1>
+<span class="badge">EXPLORE · PLAN · MEASURE</span>
+</header>
+<main>
+<aside>
+<div class="workspace-heading">
+<small>YOUR WORKSPACE</small>
+<h3>Explore beneath the surface.</h3>
+<p>Load terrain, mark locations, and plan precise transects.</p>
+</div>
+<nav class="workspace-tabs" aria-label="Workspace tools" role="tablist">
+<button id="tab-data" role="tab" aria-selected="true" aria-controls="panel-data" data-panel="data">01 <span>Data</span>
+</button>
+<button id="tab-points" role="tab" aria-selected="false" aria-controls="panel-points" data-panel="points" tabindex="-1">02 <span>Points</span>
+</button>
+<button id="tab-lines" role="tab" aria-selected="false" aria-controls="panel-lines" data-panel="lines" tabindex="-1">03 <span>Transects</span>
+</button>
+<button id="tab-layers" role="tab" aria-selected="false" aria-controls="panel-layers" data-panel="layers" tabindex="-1">04 <span>Display</span>
+</button>
+</nav>
+<div id="panel-data" role="tabpanel" aria-labelledby="tab-data" class="tool-panel">
+<section class="section">
+<div class="section-heading">
+<h2>Terrain library</h2>
+<span class="tag" id="data-badge">Loading…</span>
+</div>
+<label for="dataset-select">Active elevation grid</label>
+<select id="dataset-select" disabled>
+<option>Loading bundled grid…</option>
+</select>
+<h3 id="dataset-title">Iloilo–Guimaras, Philippines</h3>
+<p id="dataset-description">GEBCO 2026 · WGS 84 · Elevation in metres</p>
+<p class="bounds-text" id="bounds-text">
+</p>
+<div class="buttons">
+<button id="region-view" type="button" class="primary">Fit terrain extent</button>
+<button id="philippines-view" type="button">Philippines overview</button>
+</div>
+<div class="stats">
+<div>
+<small>Lowest elevation</small>
+<strong id="min">—</strong>
+</div>
+<div>
+<small>Highest elevation</small>
+<strong id="max">—</strong>
+</div>
+<div>
+<small>Grid dimensions</small>
+<strong id="dims">—</strong>
+</div>
+<div>
+<small>Cell spacing</small>
+<strong id="cell-spacing">—</strong>
+</div>
+</div>
+</section>
+<section class="section">
+<h2>Add GEBCO terrain</h2>
+<p>Choose a regional <strong>elevation grid</strong>. Your files stay on this device and are available until you reload.</p>
+<label class="upload-zone" for="terrain-files">
+<span class="upload-symbol">＋</span>
+<strong>Choose terrain files</strong>
+<small>GeoTIFF .tif / .tiff · ESRI .asc · viewer .json</small>
+<input type="file" id="terrain-files" accept=".tif,.tiff,.asc,.ascii,.json,.nc,.zip" multiple disabled>
+</label>
+<div id="upload-message" class="message" role="status" aria-live="polite">Up to 4 imported grids · 30 MB and 250,000 cells per file.</div>
+<details class="guide">
+<summary>Which GEBCO file should I download?</summary>
+<ol>
+<li>Open the <a href="https://download.gebco.net/" target="_blank" rel="noopener">GEBCO download app ↗</a> and draw a small regional area.</li>
+<li>Choose the <strong>elevation grid</strong> in <strong>Data GeoTIFF</strong> or <strong>ESRI ASCII</strong> format, using geographic WGS 84 coordinates.</li>
+<li>Unzip the download and choose its <strong>.tif</strong> or <strong>.asc</strong> file here.</li>
+</ol>
+<p>Use elevations in metres, positive upward. Shaded images, TID grids, UTM grids, and global files are not supported. ASCII files must use geographic WGS 84 coordinates.</p>
+<p>Have a NetCDF (.nc)? Download GeoTIFF instead, or convert it to viewer JSON with the repository’s <code>tools/prepare.py</code>.</p>
+</details>
+<p class="note">Switch grids using the selector above. Uploaded grids show terrain and cell elevations; derived contour overlays are available for the bundled dataset only.</p>
+</section>
+<details class="section downloads">
+<summary>Download the bundled Iloilo–Guimaras data</summary>
+<p>These files always belong to the original bundled grid, including when an uploaded grid is selected.</p>
+<a href="bathymetry.tif" download>Elevation GeoTIFF · WGS 84</a>
+<a id="original" href="gebco_2026_n10.866_s10.526_w122.433_e122.781.nc" download>Original GEBCO NetCDF</a>
+<a href="contours.geojson" download>10 m contours · GeoJSON</a>
+<a href="coastline.geojson" download>Sea-level contour · GeoJSON</a>
+<a href="downloads/gebco_2026_utm51n_delftdashboard.zip" download>Delft Dashboard package · UTM 51N</a>
+<a href="downloads/utm51n/README.txt" target="_blank" rel="noopener">Delft Dashboard import notes ↗</a>
+<p class="note">The UTM package uses EPSG:32651 and 460 m cells. No vertical datum conversion is applied.</p>
+</details>
+</div>
+<div id="panel-points" role="tabpanel" aria-labelledby="tab-points" class="tool-panel" hidden>
+<section class="section coordinate-search">
+<h2>Place a point</h2>
+<p>Enter a latitude and longitude, or click anywhere on the map.</p>
+<label for="coordinate-format">Coordinate format</label>
+<select id="coordinate-format">
+<option value="decimal">Decimal degrees</option>
+<option value="dms">Degrees, minutes, seconds (DMS)</option>
+</select>
+<form id="coordinate-form">
+<label for="latitude">Latitude · north / south</label>
+<input id="latitude" value="10.69583" placeholder="10.69583" required autocomplete="off" aria-describedby="coordinate-help">
+<label for="longitude">Longitude · east / west</label>
+<input id="longitude" value="122.60625" placeholder="122.60625" required autocomplete="off" aria-describedby="coordinate-help">
+<p id="coordinate-help" class="note">Example: 10.69583, 122.60625. Use a minus sign for south or west. Both formats are accepted in either mode.</p>
+<div class="buttons">
+<button type="submit" class="primary">Add point</button>
+<button id="my-location" type="button">Use my location</button>
+<button id="clear-point" type="button" disabled>Remove selected</button>
+</div>
+</form>
+<label class="toggle-row" for="multiple-pins">Keep existing points<input id="multiple-pins" type="checkbox" checked>
+</label>
+<div id="search-message" class="message" role="status" aria-live="polite">
+</div>
+<div id="equivalents" class="equivalents" hidden>
+<strong>DECIMAL · LATITUDE, LONGITUDE</strong>
+<code id="equivalent-decimal">
+</code>
+<strong>DEGREES / MINUTES / SECONDS</strong>
+<code id="equivalent-dms">
+</code>
+<strong>UTM · WGS 84</strong>
+<code id="equivalent-utm">
+</code>
+<strong>GRID ELEVATION</strong>
+<span id="location-description">
+</span>
+<br>
+<a id="google-link" target="_blank" rel="noopener noreferrer">Google Maps ↗</a>
+<a id="osm-link" target="_blank" rel="noopener noreferrer">OpenStreetMap ↗</a>
+</div>
+</section>
+<section class="section pins-section">
+<h2>Saved points <span id="pin-count">0</span>
+</h2>
+<p class="note">Rename points below. Drag a marker to move it. Saved in this browser.</p>
+<div id="pin-list">
+</div>
+<div class="buttons">
+<button id="fit-pins" disabled>View all</button>
+<button id="export-pins" disabled>Export GeoJSON</button>
+<button id="clear-pins" disabled>Clear points</button>
+</div>
+</section>
+</div>
+<div id="panel-lines" role="tabpanel" aria-labelledby="tab-lines" class="tool-panel" hidden>
+<section class="section">
+<h2>Build a transect</h2>
+<p>Create a straight line or a rectangle with controlled dimensions.</p>
+<form id="geometry-form">
+<label for="geometry-type">Shape</label>
+<select id="geometry-type">
+<option value="rectangle">Rectangle transect</option>
+<option value="line">Straight line</option>
+</select>
+<div class="field-grid">
+<div>
+<label for="origin-lat">Start latitude</label>
+<input id="origin-lat" value="10.69583" required>
+</div>
+<div>
+<label for="origin-lon">Start longitude</label>
+<input id="origin-lon" value="122.60625" required>
+</div>
+</div>
+<p class="note">Decimal degrees or DMS. Rectangle starts at this corner; its width extends to the right of the first side.</p>
+<button type="button" id="use-selected-point">Use selected point as start</button>
+<div class="field-grid">
+<div>
+<label for="line-distance">Length</label>
+<input id="line-distance" type="number" min="0.01" step="any" value="1000" required>
+</div>
+<div>
+<label for="distance-unit">Unit</label>
+<select id="distance-unit">
+<option value="1">metres</option>
+<option value="1000">kilometres</option>
+</select>
+</div>
+</div>
+<div id="rectangle-width-field">
+<label for="rectangle-width">Rectangle width <span id="width-unit">metres</span>
+</label>
+<input id="rectangle-width" type="number" min="0.01" step="any" value="500" required>
+</div>
+<label for="line-bearing">Direction / rotation <span>° clockwise from north</span>
+</label>
+<input id="line-bearing" type="number" min="0" max="359.999999" step="any" value="0" required>
+<div class="bearing-presets" aria-label="Direction presets">
+<button type="button" data-bearing="0">N 0°</button>
+<button type="button" data-bearing="45">NE 45°</button>
+<button type="button" data-bearing="90">E 90°</button>
+<button type="button" data-bearing="135">SE 135°</button>
+</div>
+<p id="geometry-help" class="note">A closed rectangle with right angles on the map. Length and width are measured along the two sides at the start corner; opposite geodesic sides may differ slightly with latitude. Maximum 50 km per side.</p>
+<button type="submit" id="create-geometry" class="primary full-width">Create rectangle</button>
+<button type="button" id="cancel-geometry-edit" hidden>Cancel editing</button>
+</form>
+<div id="geometry-message" class="message" role="status" aria-live="polite">
+</div>
+</section>
+<section class="section measurement">
+<h2>Draw freely on the map</h2>
+<div class="buttons">
+<button id="draw-line" type="button">＋ Start drawing</button>
+<button id="finish-line" disabled>Save line</button>
+<button id="undo-point" disabled>Undo</button>
+<button id="cancel-line" disabled>Cancel</button>
+</div>
+<label class="toggle-row">Snap direction to 45°<input id="snap-direction" type="checkbox">
+</label>
+<p id="draw-help" class="note">Start drawing, then click to add vertices. Hold Shift for temporary 45° snapping. Enter saves; Escape cancels.</p>
+<div class="measurement-live">
+<small id="measure-label">TOTAL SAVED LENGTH</small>
+<strong id="measure-total">0.00 m</strong>
+<span id="segment-length">No lines yet</span>
+</div>
+<div id="line-list">
+</div>
+<div class="buttons">
+<button id="export-lines" disabled>Export GeoJSON</button>
+<button id="clear-lines" disabled>Clear lines</button>
+</div>
+<p class="note">Bearing describes direction on the map. Slope is the change in grid elevation divided by horizontal distance between endpoints—not a surveyed terrain profile. Missing elevations show “unavailable”.</p>
+</section>
+</div>
+<div id="panel-layers" role="tabpanel" aria-labelledby="tab-layers" class="tool-panel" hidden>
+<section class="section">
+<h2>Map appearance</h2>
+<p>Balance geographic context with terrain detail.</p>
+<label>Street basemap<input id="basemap" type="checkbox" checked>
+</label>
+<label>Elevation colours<input id="raster" type="checkbox" checked>
+</label>
+<label for="raster-opacity">Terrain opacity<span id="raster-opacity-label">65%</span>
+</label>
+<input id="raster-opacity" type="range" min="0" max="100" value="65">
+<div class="legend">
+</div>
+<div class="legend-labels">
+<span id="legend-min">Deep</span>
+<span>Sea level</span>
+<span id="legend-max">High</span>
+</div>
+<p class="note">Blue: below sea level. Sand and green: above sea level. Empty cells have no data.</p>
+<label>Grid footprint<input id="footprint" type="checkbox" checked>
+</label>
+<label>Native cell boundaries<input id="cells" type="checkbox">
+</label>
+<label>Latitude / longitude grid<input id="graticule" type="checkbox">
+</label>
+</section>
+<section class="section">
+<h2>Contours</h2>
+<p id="contour-note" class="note">Derived from the bundled elevation grid.</p>
+<label>Elevation contours<input id="contours" type="checkbox" checked>
+</label>
+<label for="interval">Contour interval<select id="interval">
+<option value="10">10 m</option>
+<option value="20" selected>20 m</option>
+<option value="50">50 m</option>
+<option value="100">100 m</option>
+</select>
+</label>
+<label>Sea-level contour<input id="coast" type="checkbox" checked>
+</label>
+<label for="opacity">Contour opacity<span id="opacity-label">45%</span>
+</label>
+<input id="opacity" type="range" min="10" max="100" value="45">
+<p class="note">The sea-level contour is derived from terrain cells, not a surveyed coastline. Zooming does not increase source resolution.</p>
+</section>
+</div>
+<footer class="workspace-footer">GEBCO / Seabed 2030 · Elevation in metres<br>For exploration and planning. Not for navigation.</footer>
+</aside>
+<section class="map-area" id="map">
+<div class="toolbar">
+<button id="plus" aria-label="Zoom in">＋</button>
+<button id="minus" aria-label="Zoom out">−</button>
+<button id="fit">Fit extent</button>
+<button id="measure-map">Draw line</button>
+</div>
+<div class="help">Scroll to zoom · Drag to pan · Click to place a point</div>
+<div class="map-title">
+<span id="map-dataset-name">Iloilo–Guimaras</span>
+<small id="map-dataset-detail">GEBCO 2026 · WGS 84 elevation</small>
+</div>
+<div class="map-key" aria-label="Elevation colour scale"><small>ELEVATION · METRES</small><div id="map-legend-ramp"></div><div class="map-key-labels"><span id="map-legend-min"></span><span id="map-legend-max"></span></div></div>
+<div class="compass">N<b>↑</b>
+</div>
+<div id="leaflet-map" aria-label="OpenStreetMap with GEBCO bathymetry and measurement lines">
+</div>
+<div id="measurement-hud" class="measurement-hud" hidden>
+<small>DRAWING LINE · WGS 84</small>
+<strong id="hud-length">0.00 m</strong>
+<span id="hud-segment">Click the map to add vertices</span>
+<div class="buttons">
+<button id="hud-finish" type="button" disabled>Finish</button>
+<button id="hud-undo" type="button" disabled>Undo</button>
+<button id="hud-cancel" type="button">Cancel</button>
+</div>
+</div>
+<div class="loading" id="loading">Reading local terrain…</div>
+<div class="readout">
+<small id="sample-label">Move over the terrain</small>
+<strong id="sample">— m</strong>
+<div class="coords" id="coords">Longitude / latitude</div>
+<div class="profile" id="sample-note">Native grid cell elevation</div>
+</div>
+<div class="status">
+<span id="status">Loading…</span>
+<span>EPSG:4326 · NORTH UP</span>
+</div>
+</section>
+</main>
+<script src="vendor/leaflet.js">
+</script>
+<script src="vendor/geographiclib-geodesic.min.js">
+</script>
+<script src="vendor/geotiff.js">
+</script>
+<script src="grid-import.js">
+</script>
+<script src="coordinates.js">
+</script>
+<script src="transects.js">
+</script>
+<script src="viewer.js">
+</script>
+<script src="workspace.js">
+</script>
+</body>
+</html>
