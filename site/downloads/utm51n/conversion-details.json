@@ -1,0 +1,25 @@
+{
+  "input": "gebco_2026_n10.866_s10.526_w122.433_e122.781.nc",
+  "crs": "WGS 84 / UTM zone 51N",
+  "epsg": 32651,
+  "horizontal_units": "metre",
+  "vertical_units": "metre",
+  "vertical_positive": "up",
+  "cell_size_m": 460,
+  "resampling": "bilinear",
+  "width": 83,
+  "height": 84,
+  "valid_cells": 6732,
+  "nodata_cells": 240,
+  "nodata": -32767.0,
+  "geotransform": [
+    437920.0,
+    460.0,
+    0.0,
+    1201520.0,
+    0.0,
+    -460.0
+  ],
+  "elevation_min_m": -257.7117919921875,
+  "elevation_max_m": 190.98910522460938
+}
